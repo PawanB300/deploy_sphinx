@@ -1,0 +1,32 @@
+name: Generating docs
+
+on: 
+  pull_request:
+    types:
+      - labeled
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+    contents: write
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+      - name: Install dependencies
+        run: |
+          pip install sphinx sphinx_rtd_theme sphinx-rtd-size
+      - name: Sphinx build
+        run: |
+          sphinx-build -b html docs/source/ docs/build/
+      - name: Deploy
+        uses: actions/checkout@v3
+        if: ${{ github.event_name == 'pull_request'}}
+        with:
+          publish_branch: first_b
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/build/  
+          force_orphan: true
