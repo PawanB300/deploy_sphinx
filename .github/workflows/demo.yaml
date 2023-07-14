@@ -24,7 +24,7 @@ jobs:
           sphinx-build -b html docs/source/ docs/build/
       - name: Run ghp-import
         run: | 
-          ghp-import -n -p -f docs/build/html
+          ghp-import -n -p -f docs/build/
       - name: Deploy
         uses: actions/checkout@v3
         if: ${{ github.event_name == 'pull_request'}}
