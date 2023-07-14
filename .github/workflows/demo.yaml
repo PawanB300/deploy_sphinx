@@ -26,6 +26,6 @@ jobs:
         uses: actions/checkout@v3
         if: ${{ github.event_name == 'pull_request'}}
         with:
-          repository: "deploy_sphinx"
+          repository: "PawanB300/deploy_sphinx"
           ref: first_b
           path: docs/build/
